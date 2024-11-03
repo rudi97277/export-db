@@ -3,8 +3,13 @@ How to use this package
 1. Run the migration
 2. A new table named `export_configs` will be generated
 3. Insert a new data to the table to create a new report
-4. create an instance of class `Rudi9277/ExportDb/GenerateReport` and call `generate` function
-5. Pass the request to the function as a parameter
+4. Create a new route to make an instance of class `Rudi9277/ExportDb/GenerateReport` and call `generate` function. Pass `request` to the function as a parameter
+5. As the default body, you need to pass the `module` and `export_type` in the request.
+
+Note:
+
+- available `export_type` are xlsx and csv
+- you can create a new module in the database
 
 Table columns
 
