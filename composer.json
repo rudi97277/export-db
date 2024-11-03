@@ -1,6 +1,6 @@
 {
     "name": "rudi97277/export-db",
-    "description": "Export report as collection using query or function from database",
+    "description": "Export data to XLSX or CSV formats from database queries or functions",
     "license": "MIT",
     "keywords": [
         "laravel",
