@@ -23,7 +23,7 @@ Example
 "name" `key` is the header in the excel that will be generated
 {product_name} is the column name in the sql query result
 
-5. validator => json object that will help to validate the required data in for the query. The validator is from ![Laravel Validator](https://laravel.com/docs/11.x/validation)
+5. validator => json object that will help to validate the required data in for the query. The validator is from [Laravel Validator](https://laravel.com/docs/11.x/validation)
 
 Example
 
