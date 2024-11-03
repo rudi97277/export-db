@@ -3,7 +3,7 @@ How to use this package
 1. Run the migration
 2. A new table named `export_configs` will be generated
 3. Insert a new data to the table to create a new report
-4. create an instance of class Rudi9277/ExportDb/GenerateReport and call generate function
+4. create an instance of class `Rudi9277/ExportDb/GenerateReport` and call `generate` function
 5. Pass the request to the function as a parameter
 
 Table columns
