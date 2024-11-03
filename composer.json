@@ -1,0 +1,40 @@
+{
+    "name": "rudi97277/export-db",
+    "description": "Export report as collection using query or function from database",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "php",
+        "phpspreadsheet",
+        "phpexcel",
+        "excel",
+        "csv",
+        "database export"
+    ],
+    "require": {
+        "maatwebsite/excel": "^3.1",
+        "illuminate/database": "^10.48",
+        "illuminate/http": "^10.48"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rudi97277\\ExportDb\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rudianto Sihombing",
+            "email": "rudi97277@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Rudi97277\\ExportDb\\ExportServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+
+}
