@@ -19,6 +19,7 @@
    **Example route definition:**
 
    ```php
+   use Rudi97277\ExportDb\GenerateReport;
    Route::get('export', function () {
        $generator = new \Rudi9277\ExportDb\GenerateReport();
        return $generator->generate(request());
