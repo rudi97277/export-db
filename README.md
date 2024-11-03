@@ -25,6 +25,10 @@
    });
    ```
 
+5. **Run Symlink**
+
+   - If you never run a symlink command before, please run it `php artisan storage:link`
+
 **Note:**
 
 - Available `export_type` are `xlsx` and `csv`.
