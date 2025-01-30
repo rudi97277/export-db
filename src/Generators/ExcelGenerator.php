@@ -133,7 +133,7 @@ class ExcelGenerator implements
 
     public function styles(Worksheet $sheet)
     {
-        return $this->dto->styles ? ($this->dto->styles)($sheet) : [];
+        return $this->dto?->styles ? ($this->dto->styles)($sheet) : [];
     }
 
     /**
@@ -152,7 +152,7 @@ class ExcelGenerator implements
             },
         ];
 
-        $newEvent = $this->dto->registerEvents ? ($this->dto->registerEvents)() : [];
+        $newEvent = $this->dto?->registerEvents ? ($this->dto->registerEvents)() : [];
 
         return array_merge($defaultEvents, $newEvent);
     }
