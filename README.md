@@ -104,7 +104,7 @@ install this package using
 
         $dto = new ExportDTO($func, $style);
 
-        return  Rudi97277\ExportDb\GenerateReport::generate(request());
+        return  Rudi97277\ExportDb\GenerateReport::generate(request(),$dto);
    });
    ```
 
