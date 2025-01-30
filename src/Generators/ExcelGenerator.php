@@ -65,7 +65,7 @@ class ExcelGenerator implements
      */
     public function collection(): Collection
     {
-        $generatorData = str_contains($this->queryFunction, '?') ? $this->generatorData : array_values($this->generatorData);
+        $generatorData = str_contains($this->queryFunction, '?') ? array_values($this->generatorData) : $this->generatorData;
         // Execute the query and return the results as a collection
         return collect(DB::select($this->queryFunction, $generatorData));
     }
