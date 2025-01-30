@@ -1,3 +1,6 @@
+install this package using
+`composer require rudi97277/export-db`
+
 ## How to Use This Package
 
 1. **Run the Migration**
@@ -20,8 +23,7 @@
 
    ```php
    Route::get('export', function () {
-       $generator = new \Rudi9277\ExportDb\GenerateReport();
-       return $generator->generate(request());
+       return Rudi9277\ExportDb\GenerateReport::generate(request());
    });
    ```
 
@@ -76,3 +78,34 @@
      "name": null
    }
    ```
+
+7. To style the data, you can use ExportDTO to pass callable function to the generator like this example
+
+   ```php
+   Route::get('export', function () {
+        $style = function (Worksheet $sheet) {
+            return [
+                'A' => [
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                    ],
+                ],
+            ];
+        };
+
+        $reg = function () {
+            return [
+                AfterSheet::class => function ($event) {
+                    $sheet = $event->sheet->getDelegate();
+                    $sheet->getStyle('B:B')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                },
+            ];
+        };
+
+        $dto = new ExportDTO($func, $style);
+
+        return  Rudi97277\ExportDb\GenerateReport::generate(request());
+   });
+   ```
+
+   please check [Laravel Excel](https://laravel-excel.com/) how to use the styles

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use Rudi97277\ExportDb\DTOs\ExportDTO;
 use Rudi97277\ExportDb\Generators\ExcelGenerator;
 use Rudi97277\ExportDb\Models\ExportConfig;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -18,7 +19,7 @@ class GenerateReport
      * @param Request $request The HTTP request containing parameters for the report.
      * @return BinaryFileResponse A response containing the generated report file.
      */
-    public function generate(Request $request): BinaryFileResponse
+    public static function generate(Request $request, ExportDTO $dto = null): BinaryFileResponse
     {
         // Validate the request parameters
         $request->validate([
@@ -39,7 +40,7 @@ class GenerateReport
         $generatorData = array_map(fn($item) => is_array($item) ? json_encode($item) : $item, $generatorData);
 
         // Create a new instance of the ExcelGenerator with the specified parameters
-        $generator = new ExcelGenerator($generator->query, $generatorData, $generator->formatter, $generator->title, $request->export_type);
+        $generator = new ExcelGenerator($generator->query, $generatorData, $generator->formatter, $generator->title, $request->export_type, $dto);
 
         // Generate a unique filename based on the current date and a random number
         $now = date('Y-m-d_H-i-s');
@@ -53,7 +54,7 @@ class GenerateReport
         register_shutdown_function(function () use ($fullPath) {
             $filePath = Storage::path('public/' . $fullPath);
             if (file_exists($filePath)) {
-                unlink($filePath); // Delete the file if it exists
+                // unlink($filePath); // Delete the file if it exists
             }
         });
 

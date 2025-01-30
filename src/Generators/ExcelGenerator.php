@@ -11,8 +11,11 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
+use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Rudi97277\ExportDb\DTOs\ExportDTO;
 use Rudi97277\ExportDb\Interfaces\ExportQueryInterface;
 
 class ExcelGenerator implements
@@ -24,6 +27,7 @@ class ExcelGenerator implements
     ShouldAutoSize,
     WithStrictNullComparison,
     WithEvents,
+    WithStyles,
     ExportQueryInterface
 {
     /**
@@ -55,7 +59,8 @@ class ExcelGenerator implements
         private array $generatorData,
         private array $formatterFormat,
         private string $title,
-        private string $exportType
+        private string $exportType,
+        private ?ExportDTO $dto
     ) {}
 
     /**
@@ -126,6 +131,11 @@ class ExcelGenerator implements
         return "{$this->startCol}{$this->startRow}"; // Return the starting cell in Excel notation
     }
 
+    public function styles(Worksheet $sheet)
+    {
+        return $this->dto->styles ? ($this->dto->styles)($sheet) : [];
+    }
+
     /**
      * Register events to be triggered during the export.
      *
@@ -133,7 +143,7 @@ class ExcelGenerator implements
      */
     public function registerEvents(): array
     {
-        return [
+        $defaultEvents = [
             AfterSheet::class => function (AfterSheet $event) {
                 // Apply autofilter to the exported data
                 $event->sheet->getDelegate()->setAutoFilter("{$this->startCell()}:" . $event->sheet->getDelegate()->getHighestColumn() . $this->startRow);
@@ -141,5 +151,9 @@ class ExcelGenerator implements
                 $event->sheet->getDelegate()->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
             },
         ];
+
+        $newEvent = $this->dto->registerEvents ? ($this->dto->registerEvents)() : [];
+
+        return array_merge($defaultEvents, $newEvent);
     }
 }
