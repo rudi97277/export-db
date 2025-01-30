@@ -65,8 +65,9 @@ class ExcelGenerator implements
      */
     public function collection(): Collection
     {
+        $generatorData = str_contains($this->queryFunction, '?') ? $this->generatorData : array_values($this->generatorData);
         // Execute the query and return the results as a collection
-        return collect(DB::select($this->queryFunction, array_values($this->generatorData)));
+        return collect(DB::select($this->queryFunction, $generatorData));
     }
 
     /**
@@ -94,7 +95,7 @@ class ExcelGenerator implements
         foreach ($this->formatterFormat as $formatter) {
             // Format the value according to the defined pattern
             $formattedString = preg_replace_callback('/\{(\w+)\}/', function ($matches) use ($item) {
-                return $item->{$matches[1]} ?? $matches[0]; // Replace placeholders with actual values
+                return $item->{$matches[1]} ?? ''; // Replace placeholders with actual values
             }, $formatter['value']);
 
             $formatted[] = $formattedString; // Add formatted value to the array
